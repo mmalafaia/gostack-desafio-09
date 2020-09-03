@@ -1,4 +1,4 @@
-import { getRepository, Repository, In } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 
 import IProductsRepository from '@modules/products/repositories/IProductsRepository';
 import ICreateProductDTO from '@modules/products/dtos/ICreateProductDTO';
@@ -55,7 +55,22 @@ class ProductsRepository implements IProductsRepository {
 
     const productsByIds = await this.ormRepository.findByIds(productsIds);
 
-    return productsByIds;
+    const productsToUpdate = productsByIds.map(productById => {
+      const orderProduct = products.find(
+        product => product.id === productById.id,
+      );
+
+      const quantity = productById.quantity - (orderProduct?.quantity || 0);
+
+      return {
+        ...productById,
+        quantity,
+      };
+    });
+
+    const updatedProducts = await this.ormRepository.save(productsToUpdate);
+
+    return updatedProducts;
   }
 }
 
