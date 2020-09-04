@@ -17,10 +17,18 @@ class OrdersProducts {
   id: string;
 
   @Column()
-  product_id: string;
+  order_id: string;
+
+  @ManyToOne(() => Order, order => order.order_products)
+  @JoinColumn({ name: 'order_id' })
+  order: Order;
 
   @Column()
-  order_id: string;
+  product_id: string;
+
+  @ManyToOne(() => Product, product => product.order_products)
+  @JoinColumn({ name: 'product_id' })
+  product: Product;
 
   @Column()
   price: number;
@@ -33,14 +41,6 @@ class OrdersProducts {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  @ManyToOne(() => Order, order => order.order_products)
-  @JoinColumn({ name: 'order_id' })
-  order: Order;
-
-  @ManyToOne(() => Product, product => product.order_products)
-  @JoinColumn({ name: 'product_id' })
-  product: Product;
 }
 
 export default OrdersProducts;

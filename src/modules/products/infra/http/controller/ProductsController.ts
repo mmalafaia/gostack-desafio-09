@@ -16,6 +16,5 @@ export default class ProductsController {
     });
 
     return response.json(product);
-    // TODO
   }
 }

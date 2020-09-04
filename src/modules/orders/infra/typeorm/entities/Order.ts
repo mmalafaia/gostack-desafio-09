@@ -1,7 +1,7 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column,
+  // Column,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
@@ -17,8 +17,8 @@ class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  customer_id: string;
+  // @Column()
+  // customer_id: string;
 
   @ManyToOne(() => Customer, { eager: true })
   @JoinColumn({ name: 'customer_id' })
