@@ -60,7 +60,9 @@ class ProductsRepository implements IProductsRepository {
         product => product.id === productById.id,
       );
 
-      const quantity = productById.quantity - (orderProduct?.quantity || 0);
+      const quantity = Number(
+        productById.quantity - (orderProduct?.quantity || 0),
+      );
 
       return {
         ...productById,
